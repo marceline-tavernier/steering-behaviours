@@ -11,7 +11,9 @@ void setup() {
   textSize(20);
   windowTitle("Lab 01");
 
-  t = new Target(new PVector(500, 500));
+  PVector[] path = {new PVector(500, 500), new PVector(800, 500), new PVector(100, 500)};
+  PVector[] path_vel = {new PVector(5, 0), new PVector(-5, 0), new PVector(5, 0)};
+  t = new Target(path, path_vel);
 
   agents.add(new Agent(new PVector(100, 100), new PVector(1, 5)));
 }
@@ -34,14 +36,16 @@ void draw_info() {
 
 void draw() {
   background(200);
-  t.draw(MOUSE_TARGET);
+
+  t.draw();
+  t.update_pos(MOUSE_TARGET);
 
   for (int i = 0; i < agents.size(); i++) {
     agents.get(i).draw();
   }
 
   for (int i = 0; i < agents.size(); i++) {
-    agents.get(i).update_mode(t.pos, mode);
+    agents.get(i).update_mode(t.cur_pos, mode);
   }
 
   draw_info();
@@ -60,6 +64,12 @@ void keyPressed() {
     break;
   case  'c':
     mode = next(mode);
+    if (mode == MODES.PURSUIT || mode == MODES.EVADE) {
+      t.moving = true;
+    } else {
+      t.moving = false;
+      t.cur = 0;
+    }
     break;
   }
 }
