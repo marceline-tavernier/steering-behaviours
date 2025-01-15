@@ -11,7 +11,7 @@ void setup() {
   textSize(20);
   windowTitle("Lab 01");
 
-  PVector[] path = {new PVector(500, 500), new PVector(800, 500), new PVector(100, 500)};
+  PVector[] path = {new PVector(500, 500), new PVector(900, 500), new PVector(100, 500)};
   PVector[] path_vel = {new PVector(5, 0), new PVector(-5, 0), new PVector(5, 0)};
   t = new Target(path, path_vel);
 
@@ -28,10 +28,13 @@ void draw_info() {
   draw_mode(mode);
 
   fill(0);
-  text("Debug : D", width - 90, 25);
-  text("Target on mouse : M", width - 175, 50);
-  text("Change mode : C", width - 150, 75);
-  text("Spawn agent : A", width - 140, 100);
+  text("Change mode : S, F, P, E, A", 25, 50);
+  text("Cycle mode : C", 25, 75);
+
+  text("New agent : click", 25, 125);
+
+  text("Target on mouse : M", 25, 175);
+  text("Debug : D", 25, 200);
 }
 
 void draw() {
@@ -51,6 +54,10 @@ void draw() {
   draw_info();
 }
 
+void mousePressed() {
+  agents.add(new Agent(new PVector(mouseX, mouseY), new PVector(random(-5, 5), random(-5, 5))));
+}
+
 void keyPressed() {
   switch (key) {
   case 'd':
@@ -58,9 +65,6 @@ void keyPressed() {
     break;
   case 'm':
     MOUSE_TARGET = !MOUSE_TARGET;
-    break;
-  case  'a':
-    agents.add(new Agent(new PVector(mouseX, mouseY), new PVector(1, 5)));
     break;
   case  'c':
     mode = next(mode);
@@ -70,6 +74,30 @@ void keyPressed() {
       t.moving = false;
       t.cur = 0;
     }
+    break;
+
+  case 's':
+    mode = MODES.SEEK;
+    t.moving = false;
+    t.cur = 0;
+    break;
+  case 'f':
+    mode = MODES.FLEE;
+    t.moving = false;
+    t.cur = 0;
+    break;
+  case 'p':
+    mode = MODES.PURSUIT;
+    t.moving = true;
+    break;
+  case 'e':
+    mode = MODES.EVADE;
+    t.moving = true;
+    break;
+  case 'a':
+    mode = MODES.ARRIVAL;
+    t.moving = false;
+    t.cur = 0;
     break;
   }
 }
