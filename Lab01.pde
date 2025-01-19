@@ -2,7 +2,7 @@
 boolean DEBUG = false;
 boolean MOUSE_TARGET = false;
 
-Target t;
+Target target;
 ArrayList<Agent> agents = new ArrayList<Agent>();
 MODES mode = MODES.SEEK;
 
@@ -11,9 +11,9 @@ void setup() {
   textSize(20);
   windowTitle("Lab 01");
 
-  PVector[] path = {new PVector(500, 500), new PVector(900, 500), new PVector(100, 500)};
-  PVector[] path_vel = {new PVector(5, 0), new PVector(-5, 0), new PVector(5, 0)};
-  t = new Target(path, path_vel);
+  PVector[] path = {new PVector(500, 500), new PVector(900, 500), new PVector(900, 900), new PVector(100, 900), new PVector(100, 500)};
+  PVector[] path_velocity = {new PVector(TARGET_MAX_SPEED, 0), new PVector(0, TARGET_MAX_SPEED), new PVector(-TARGET_MAX_SPEED, 0), new PVector(0, -TARGET_MAX_SPEED), new PVector(TARGET_MAX_SPEED, 0)};
+  target = new Target(path, path_velocity);
 
   agents.add(new Agent(new PVector(100, 100), new PVector(1, 5)));
 }
@@ -40,22 +40,22 @@ void draw_info() {
 void draw() {
   background(200);
 
-  t.draw();
-  t.update_pos(MOUSE_TARGET);
+  target.draw();
+  target.update_values(MOUSE_TARGET);
 
   for (int i = 0; i < agents.size(); i++) {
     agents.get(i).draw();
   }
 
   for (int i = 0; i < agents.size(); i++) {
-    agents.get(i).update_mode(t.cur_pos, mode);
+    agents.get(i).update_values(target, mode);
   }
 
   draw_info();
 }
 
 void mousePressed() {
-  agents.add(new Agent(new PVector(mouseX, mouseY), new PVector(random(-5, 5), random(-5, 5))));
+  agents.add(new Agent(new PVector(mouseX, mouseY), new PVector(0, 0)));
 }
 
 void keyPressed() {
@@ -69,35 +69,35 @@ void keyPressed() {
   case  'c':
     mode = next(mode);
     if (mode == MODES.PURSUIT || mode == MODES.EVADE) {
-      t.moving = true;
+      target.is_moving = true;
     } else {
-      t.moving = false;
-      t.cur = 0;
+      target.is_moving = false;
+      target.current_index = 0;
     }
     break;
 
   case 's':
     mode = MODES.SEEK;
-    t.moving = false;
-    t.cur = 0;
+    target.is_moving = false;
+    target.current_index = 0;
     break;
   case 'f':
     mode = MODES.FLEE;
-    t.moving = false;
-    t.cur = 0;
+    target.is_moving = false;
+    target.current_index = 0;
     break;
   case 'p':
     mode = MODES.PURSUIT;
-    t.moving = true;
+    target.is_moving = true;
     break;
   case 'e':
     mode = MODES.EVADE;
-    t.moving = true;
+    target.is_moving = true;
     break;
   case 'a':
     mode = MODES.ARRIVAL;
-    t.moving = false;
-    t.cur = 0;
+    target.is_moving = false;
+    target.current_index = 0;
     break;
   }
 }
