@@ -8,6 +8,8 @@ class Target {
   PVector current_position;
   PVector current_velocity;
   boolean is_moving = false;
+  boolean is_path = false;
+  boolean is_path_looping = false;
 
   Target (PVector[] path, PVector[] path_velocity) {
     this.path = path;
@@ -17,7 +19,49 @@ class Target {
 
   void draw() {
     fill(255);
-    circle(current_position.x, current_position.y, 50);
+    if (is_path) {
+      for (int i = 0; i < path.length; i++) {
+        circle(path[i].x, path[i].y, 50);
+        if (i > 0) {
+          line(path[i - 1].x, path[i - 1].y, path[i].x, path[i].y);
+        } 
+        if (i == path.length - 1 && is_path_looping) {
+          line(path[0].x, path[0].y, path[i].x, path[i].y);
+        }
+      }
+    } else {
+      circle(current_position.x, current_position.y, 50);
+    }
+  }
+
+  void update_mode(MODES mode) {
+    switch(mode) {
+    case SEEK:
+    case FLEE:
+    case ARRIVAL:
+      target.is_moving = false;
+      target.is_path = false;
+      target.current_index = 0;
+      break;
+    case PURSUIT:
+    case EVADE:
+      target.is_moving = true;
+      target.is_path = false;
+      break;
+    case CIRCUIT:
+      target.is_moving = false;
+      target.is_path = true;
+      target.is_path_looping = true;
+      target.current_index = 0;
+      break;
+    case ONE_WAY:
+    case TWO_WAYS:
+      target.is_moving = false;
+      target.is_path = true;
+      target.is_path_looping = false;
+      target.current_index = 0;
+      break;
+    }
   }
 
   void update_values(boolean use_mouse_position) {

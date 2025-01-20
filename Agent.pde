@@ -11,6 +11,8 @@ class Agent {
   PVector desired_velocity = new PVector(0, 0);
   PVector steering = new PVector(0, 0);
   color col;
+  int target_path_index = -1;
+  boolean normal_direction = true;
 
   Agent(PVector position, PVector velocity) {
     this.position = position;
@@ -38,7 +40,6 @@ class Agent {
   void draw_vector(PVector origin, PVector vector, color col) {
     stroke(col);
     fill(col);
-    strokeWeight(3);
     strokeCap(ROUND);
 
     float x = origin.x + vector.x * VECTOR_MULT;
@@ -54,7 +55,6 @@ class Agent {
     popMatrix();
 
     strokeCap(SQUARE);
-    strokeWeight(1);
     fill(255);
     stroke(0);
   }
@@ -77,6 +77,15 @@ class Agent {
       break;
     case ARRIVAL:
       arrival(target);
+      break;
+    case CIRCUIT:
+      circuit(target);
+      break;
+    case ONE_WAY:
+      one_way(target);
+      break;
+    case TWO_WAYS:
+      two_ways(target);
       break;
     }
   }
@@ -112,6 +121,69 @@ class Agent {
     float clipped_speed = min(ramped_speed, MAX_SPEED);
 
     desired_velocity = target_offset.normalize().mult(clipped_speed);
+  }
+
+  void find_closest_path_target(Target target) {
+    if (target_path_index == -1) {
+      float min_distance = target.path[0].copy().sub(position).mag();
+      target_path_index = 0;
+      for (int i = 1; i < target.path.length; i++) {
+        float distance = target.path[i].copy().sub(position).mag();
+        if (distance < min_distance) {
+          min_distance = distance;
+          target_path_index = i;
+        }
+      }
+    }
+  }
+
+  void circuit(Target target) {
+    find_closest_path_target(target);
+
+    PVector target_position = target.path[target_path_index];
+    seek(new Target(new PVector[]{target_position}, new PVector[]{new PVector(0, 0)}));
+
+    if (position.dist(target_position) < TARGET_MAX_SPEED / 2) {
+      target_path_index = (target_path_index + 1) % target.path.length;
+    }
+  }
+
+  void one_way(Target target) {
+    find_closest_path_target(target);
+
+    PVector target_position = target.path[target_path_index];
+    if (target_path_index == target.path.length - 1) {
+      arrival(new Target(new PVector[]{target_position}, new PVector[]{new PVector(0, 0)}));
+    } else {
+      seek(new Target(new PVector[]{target_position}, new PVector[]{new PVector(0, 0)}));
+    }
+
+    if (target_path_index < target.path.length - 1 && position.dist(target_position) < TARGET_MAX_SPEED / 2) {
+      target_path_index = (target_path_index + 1) % target.path.length;
+    }
+  }
+
+  void two_ways(Target target) {
+    find_closest_path_target(target);
+
+    PVector target_position = target.path[target_path_index];
+    if (target_path_index == target.path.length - 1 || target_path_index == 0) {
+      arrival(new Target(new PVector[]{target_position}, new PVector[]{new PVector(0, 0)}));
+    } else {
+      seek(new Target(new PVector[]{target_position}, new PVector[]{new PVector(0, 0)}));
+    }
+
+    if (position.dist(target_position) < TARGET_MAX_SPEED / 2) {
+      target_path_index = target_path_index + (normal_direction ? 1 : -1);
+
+      if (target_path_index == -1) {
+        target_path_index = 1;
+        normal_direction = true;
+      } else if (target_path_index == target.path.length) {
+        target_path_index = target.path.length - 2;
+        normal_direction = false;
+      }
+    }
   }
 
   void update_values(Target target, MODES mode) {
