@@ -29,11 +29,11 @@ void draw_info() {
   draw_mode(mode);
 
   fill(0);
-  text("Change mode : S, F, P, E, A, C, O, T", 25, 50);
+  text("Changer de mode : S, F, P, E, A, C, O, T", 25, 50);
 
-  text("New agent : click", 25, 100);
+  text("Nouvel agent : clique", 25, 100);
 
-  text("Target on mouse : M", 25, 150);
+  text("Cible sur la souris : M", 25, 150);
   text("Debug : D", 25, 175);
 }
 
