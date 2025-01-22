@@ -2,7 +2,7 @@
 
 Artificial intelligence in games #1 : Steering behaviours
 
-[Sterring video](https://github.com/user-attachments/assets/130fdf0e-992f-450d-8aa3-ae9c4de6b8b6)
+[Steering behaviours video](https://github.com/user-attachments/assets/3e5a6887-76f6-4d8d-abc7-bd06fa271fd3)
 
 ## Description
 - Visualize the different steering behaviours
