@@ -1,38 +1,27 @@
-# Lab01
+# Steering
 
-## Installation et lancement de Processing
+[Sterring video](https://github.com/user-attachments/assets/130fdf0e-992f-450d-8aa3-ae9c4de6b8b6)
 
-Téléchargez Processing à partir du site officiel : [processing.org/download](https://processing.org/download/).
-Dans Processing, cliquez sur « File > Open », puis sélectionnez le fichier `.pde` du projet.
-Puis appuyez sur le bouton « Play » (triangle en haut de la fenêtre) pour lancer l'application.
+## Description
+- Visualize the different steering methods
+- You can click to add a new agent
+- You can change the steering method with 'S' (Seek), 'F' (Flee), 'P' (Pursuit), 'E' (Evade), 'A' (Arrival), 'C' (Circuit), 'O' (One way) and 'T' (Two ways)
+- You can attach the target to the mouse with 'M'
+- You can display the debug vectors with 'D'
 
---- 
+## Installing and launching Processing
 
-## Commandes
+Download Processing from the official website: [processing.org/download](https://processing.org/download/).
+In Processing, click on "File > Open", then select the `.pde` project file.
+Then press the "Play" button (triangle at the top of the window) to launch the application.
 
-### Changer de mode
-- S : Seek
-- F : Flee
-- P : Pursuit
-- E : Evade
-- A : Arrival
-- C : Circuit
-- O : One way
-- T : Two ways
+## Details
+| Programming language | Start and end date | Inspired by |
+| :---: | :---: | :---: |
+| Processing | January 2025 | A lab |
 
-### Gestion des agents et de la cible
-- Clique souris : Ajouter un nouvel agent
-- M : Placer la cible sur la position de la souris
 
-### Mode Debug
-- D : Afficher ou masquer les vecteurs pour le débogage
+## License
 
-## Debug
-| Vecteur | Couleur |
-| --- | --- |
-| Desired velocity | Noir |
-| Velocity | Vert |
-| Steering | Bleu |
-
----
+[The Unlicense](LICENSE)
 
