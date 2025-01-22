@@ -1,13 +1,13 @@
-# Steering
+# Steering Behaviours
 
-Artificial intelligence in games #1 : Steering
+Artificial intelligence in games #1 : Steering behaviours
 
 [Sterring video](https://github.com/user-attachments/assets/130fdf0e-992f-450d-8aa3-ae9c4de6b8b6)
 
 ## Description
-- Visualize the different steering methods
+- Visualize the different steering behaviours
 - You can click to add a new agent
-- You can change the steering method with 'S' (Seek), 'F' (Flee), 'P' (Pursuit), 'E' (Evade), 'A' (Arrival), 'C' (Circuit), 'O' (One way) and 'T' (Two ways)
+- You can change the steering behaviour with 'S' (Seek), 'F' (Flee), 'P' (Pursuit), 'E' (Evade), 'A' (Arrival), 'C' (Circuit), 'O' (One way) and 'T' (Two ways)
 - You can attach the target to the mouse with 'M'
 - You can display the debug vectors with 'D'
 
