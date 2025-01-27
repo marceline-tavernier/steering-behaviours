@@ -1,30 +1,10 @@
 
+// Enum of the modes
 enum MODES {
   SEEK, FLEE, PURSUIT, EVADE, ARRIVAL, CIRCUIT, ONE_WAY, TWO_WAYS;
 };
 
-MODES next(MODES mode) {
-  switch(mode) {
-  case SEEK:
-    return MODES.FLEE;
-  case FLEE:
-    return MODES.PURSUIT;
-  case PURSUIT:
-    return MODES.EVADE;
-  case EVADE:
-    return MODES.ARRIVAL;
-  case ARRIVAL:
-    return MODES.CIRCUIT;
-  case CIRCUIT:
-    return MODES.ONE_WAY;
-  case ONE_WAY:
-    return MODES.TWO_WAYS;
-  case TWO_WAYS:
-  default:
-    return MODES.SEEK;
-  }
-}
-
+// Draw info based on the mode
 void draw_mode(MODES mode) {
   switch(mode) {
   case SEEK:
