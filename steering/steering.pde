@@ -15,7 +15,7 @@ void setup() {
   // Set size to 1000x1000, title, font size and stroke size
   size(1000, 1000);
   textSize(20);
-  windowTitle("Steering behaviours");
+  windowTitle("Artificial intelligence in games #1 : Steering behaviours");
   strokeWeight(3);
 
   // Initialise the path and the target
